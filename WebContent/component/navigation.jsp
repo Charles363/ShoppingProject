@@ -18,6 +18,9 @@
             <a href="<%=basePath %>management/seller_releasegood/releasegood.jsp">发布商品</a>
         </li>
         <li>
+            <a href="<%=basePath %>management/seller_merchanmanage/seller_merchanmanage.jsp">商品管理</a>
+        </li>
+        <li>
             <a href="<%=basePath %>buyerServlet">查看购买意向</a>
         </li>
           <li>

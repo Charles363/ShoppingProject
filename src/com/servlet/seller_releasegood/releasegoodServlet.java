@@ -39,6 +39,7 @@ public class releasegoodServlet extends HttpServlet {
 		int goodprice = 0 ;
 		int goodnum = 0 ;
 		String goodgenre = request.getParameter("selectName");
+		System.out.println(goodgenre);
 		String goodinf = null;
 		String fileName = null;
 		HttpSession session=request.getSession();	
@@ -63,6 +64,9 @@ public class releasegoodServlet extends HttpServlet {
 							goodinf = item.getString("utf-8");
 						}else if(itemName.equals("goodnum")) {
 							goodnum = Integer.parseInt(item.getString());
+						}else if(itemName.equals("goodgenre")) {
+							goodgenre = item.getString("utf-8");
+							System.out.println(goodgenre);
 						}
 						}else {//文件上传
 							//文件名 getFieldName是获取普通表单字段的Name值
