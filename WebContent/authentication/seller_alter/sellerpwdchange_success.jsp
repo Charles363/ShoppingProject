@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@include file= "../../component/navigation.jsp" %>
-<meta http-equiv="refresh" content="3;URL=<%=basePath %>seller_login/seller_login_success.jsp">
+<meta http-equiv="refresh" content="3;URL=<%=basePath %>authentication/seller_login/seller_login_success.jsp">
 <link rel="stylesheet" id="templatecss" type="text/css" href="<%=basePath %>css/centerP.css">
 </head>
 <body>
