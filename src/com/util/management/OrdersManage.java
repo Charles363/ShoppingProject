@@ -5,10 +5,11 @@ import java.util.Date;
 
 import com.dao.merchandise.MerchandiseD;
 import com.dao.merchandise.MerchandiseDI;
-import com.dao.merchaninfo.StockLogD;
-import com.dao.merchaninfo.StockLogDI;
+import com.dao.merchandise.StockLogD;
+import com.dao.merchandise.StockLogDI;
 import com.dao.orders.OrdersD;
 import com.dao.orders.OrdersDI;
+import com.util.util.GetFull;
 import com.vo.Merchandise;
 import com.vo.Orders;
 import com.vo.StockLog;
@@ -23,7 +24,7 @@ public class OrdersManage implements OrdersManageUtil {
 		Orders o = null;
 		OrdersD od = new OrdersDI();
 		try {
-			Merchandise m = md.selectMerchan(m_id);
+			Merchandise m = md.selectMerchan(new Merchandise(m_id));
 			m = md.selectStockLog(m);
 			int num = m.getStockLog().get(0).getSl_num();
 			i = num - o_num;
@@ -37,6 +38,8 @@ public class OrdersManage implements OrdersManageUtil {
 				o = od.insertOrders(o);
 				o = od.selectBuyerInfo(o);
 				o = od.selectMerchandise(o);
+				sl.setO_id(o.getO_id());
+				sld.updateLog(sl);
 				if(i == 0) {
 					md.updateStatus(m, 0);
 				}
@@ -82,11 +85,17 @@ public class OrdersManage implements OrdersManageUtil {
 		boolean flag = false;
 		OrdersD od = new OrdersDI();
 		StockLogD slg = new StockLogDI();
+		GetFull gf = new GetFull();
 		try {
 			Orders o = new Orders(o_id);
-			if(od.deleteOrders(o) && slg.deleteLog(o_id)) {
+			o = gf.getAllOrders(o);
+			StockLog sl = new StockLog();
+			sl.setSl_id(o.getSl_id());
+			sl.setO_id(0);
+			slg.updateLog(sl);
+			if( od.deleteOrders(o) && slg.deleteLog(new Orders(0))) {
 				flag = true;
-			}			
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
