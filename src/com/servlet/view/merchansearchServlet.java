@@ -10,24 +10,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.util.view.OrdersView;
-import com.vo.Orders;
+import com.util.view.MerchanView;
+import com.vo.Merchandise;
 
 
-@WebServlet("/buyerhistoryServlet")
-public class buyerhistoryServlet extends HttpServlet {
+@WebServlet("/merchansearchServlet")
+public class merchansearchServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
-		String b_act = (String)request.getParameter("b_act");
-		OrdersView ov = new OrdersView();
-		ArrayList<Orders> ao = ov.getBuyerOrders(b_act);
-		session.setAttribute("orders", ao);
-		response.sendRedirect("view/seller_viewbuyerinfo/buyer_history.jsp");
+		String words = request.getParameter("search");
+		MerchanView mv = new MerchanView(); 
+		ArrayList<Merchandise> am = mv.showSelectedMerchan(words);
+		if(words.equals("")) {
+			response.sendRedirect("index.jsp");
+		}else {
+			session.setAttribute("value", words);
+			session.setAttribute("am", am);
+			response.sendRedirect("searchindex.jsp");
+		}
+		
+		
+		
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
